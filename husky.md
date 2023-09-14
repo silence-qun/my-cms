@@ -1,4 +1,6 @@
-# husky
+# git 提交规范
+
+## husky
 
 #### 是一个 git hook 工具，可以帮助我们触发 git 提交的各个阶段：pre-commit、commit-msg、pre-push
 
@@ -23,9 +25,9 @@ npx husky-init && npm install
   }
   ```
 
-# git 提交规范
+## commitizen
 
-#### commitizen：帮助我们编写规范 commit message 的工具
+#### 帮助我们编写规范 commit message 的工具
 
 1. 安装 commitizen
 
@@ -51,10 +53,17 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
 }
 ```
 
-3. 提交代码
-   使用命令 `npx cz`
+3. 提交代码  
+   使用命令 `npx cz`，也可以在 package.json 文件中配置运行命令
+   ```json
+   {
+     "scripts": {
+       "commit": "cz"
+     }
+   }
+   ```
 
-- 选择 Type
+- 选择 Type ：Select the type of change that you're committing
   Type | 作用
   ---- | ----
   feat | 新增特性（feature）
@@ -68,8 +77,37 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
   ci | 更改配置文件和 package.json 的 scripts 命令
   chore | 变更构建流程或辅助工具（比如更改测试环境）
   revert | 代码回退
-- 填写本次修改的范围（作用域）：
-- 填写提交的信息
-- 填写提交的详细信息描述
-- 是否是一次重大的更改
-- 是否影响某个 open issue
+  ![cz_pic_0](./src/assets/md_img/cz_pic_0.jpg 'cz_pic_0')
+  ![cz_pic_1](./src/assets/md_img/cz_pic_1.jpg 'cz_pic_1')
+- 填写本次修改的范围（作用域）：What is the scope of this change (e.g. component or file name)
+- 填写提交的信息：Write a short, imperative tense description of the change (max 90 chars)
+- 填写提交的详细信息描述：Provide a longer description of the change
+- 是否是一次重大的更改：Are there any breaking changes
+- 是否影响某个 open issue ：Does this change affect any open issues
+  ![cz_pic_2](./src/assets/md_img/cz_pic_2.jpg 'cz_pic_2')
+
+## commitlint
+
+#### 提交验证
+
+虽然按 cz 规范了提交风格，依然可以通过 git commit 来提交不规范的 git 风格信息，可用 commitlint 来限制提交
+
+1.  安装 @commitlint/config-conventional 和 @commitlint/cli
+
+```bash
+npm install @commitlint/config-conventional @commitlint/cli -D
+```
+
+2. 在根目录创建 commit.config.js 文件，配置 commitlint
+
+```javascript
+module.exports = {
+  extends: ['@commitlint/config-conventional']
+}
+```
+
+3. 使用 husky 生成 commit-msg 文件，验证提交信息
+
+```bash
+npx husky add .husky/commit-msg "npx --no-install commitlint --edit $1"
+```
