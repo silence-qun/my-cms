@@ -1,11 +1,11 @@
 # 代码规范配置信息
 
-- [prettier](#prettier↑)
-- [husky](#husky↑)
-- [commitizen](#commitizen↑)
-- [commitlint](#commitlint↑)
+- [prettier](#prettier)
+- [husky](#husky)
+- [commitizen](#commitizen)
+- [commitlint](#commitlint)
 
-## prettier[↑](#代码规范配置信息)
+## prettier [↑](#代码规范配置信息)
 
 #### 代码格式化
 
@@ -54,7 +54,7 @@ module.exports = {
 }
 ```
 
-## husky[↑](#代码规范配置信息)
+## husky [↑](#代码规范配置信息)
 
 #### 是一个 git hook 工具，可以帮助我们触发 git 提交的各个阶段：pre-commit、commit-msg、pre-push
 
@@ -79,7 +79,7 @@ npx husky-init && npm install
   }
   ```
 
-## commitizen[↑](#代码规范配置信息)
+## commitizen [↑](#代码规范配置信息)
 
 #### 帮助我们编写规范 commit message 的工具
 
@@ -131,16 +131,19 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
   ci | 更改配置文件和 package.json 的 scripts 命令
   chore | 变更构建流程或辅助工具（比如更改测试环境）
   revert | 代码回退
+
   ![cz_pic_0](./src/assets/md_img/cz_pic_0.jpg 'cz_pic_0')
   ![cz_pic_1](./src/assets/md_img/cz_pic_1.jpg 'cz_pic_1')
+
 - 填写本次修改的范围（作用域）：What is the scope of this change (e.g. component or file name)
 - 填写提交的信息：Write a short, imperative tense description of the change (max 90 chars)
 - 填写提交的详细信息描述：Provide a longer description of the change
 - 是否是一次重大的更改：Are there any breaking changes
 - 是否影响某个 open issue ：Does this change affect any open issues
+
   ![cz_pic_2](./src/assets/md_img/cz_pic_2.jpg 'cz_pic_2')
 
-## commitlint[↑](#代码规范配置信息)
+## commitlint [↑](#代码规范配置信息)
 
 #### 提交验证
 
