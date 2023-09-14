@@ -5,7 +5,7 @@
 - [commitizen](#commitizen)
 - [commitlint](#commitlint)
 
-## prettier [↑](#代码规范配置信息)
+## prettier[↑](#代码规范配置信息)
 
 #### 代码格式化
 
@@ -54,7 +54,7 @@ module.exports = {
 }
 ```
 
-## husky [↑](#代码规范配置信息)
+## husky[↑](#代码规范配置信息)
 
 #### 是一个 git hook 工具，可以帮助我们触发 git 提交的各个阶段：pre-commit、commit-msg、pre-push
 
@@ -79,7 +79,7 @@ npx husky-init && npm install
   }
   ```
 
-## commitizen [↑](#代码规范配置信息)
+## commitizen[↑](#代码规范配置信息)
 
 #### 帮助我们编写规范 commit message 的工具
 
@@ -143,7 +143,7 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
 
   ![cz_pic_2](./src/assets/md_img/cz_pic_2.jpg 'cz_pic_2')
 
-## commitlint [↑](#代码规范配置信息)
+## commitlint[↑](#代码规范配置信息)
 
 #### 提交验证
 

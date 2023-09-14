@@ -4,7 +4,7 @@
 - [vue-router](#vue-router)
 - [vuex](#vuex)
 
-## vue.config.js [↑](#第三方库集成配置信息)
+## vue.config.js[↑](#第三方库集成配置信息)
 
 #### 项目构建的配置信息
 
@@ -59,7 +59,7 @@ module.exports = defineConfig({
 })
 ```
 
-## vue-router [↑](#第三方库集成配置信息)
+## vue-router[↑](#第三方库集成配置信息)
 
 1. 安装 [vue-router](https://router.vuejs.org/zh/guide/ 'vue-router')
 
@@ -71,7 +71,7 @@ npm install vue-router@4
 3. 在 main.ts 中引入 router
 4. 在组件中使用
 
-## vuex [↑](#第三方库集成配置信息)
+## vuex[↑](#第三方库集成配置信息)
 
 1. 安装 [vuex](https://vuex.vuejs.org/zh/guide/ 'vuex')
 
