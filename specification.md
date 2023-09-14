@@ -1,10 +1,64 @@
-# git 提交规范
+# 代码规范配置信息
 
-## husky
+- [prettier](#prettier↑)
+- [husky](#husky↑)
+- [commitizen](#commitizen↑)
+- [commitlint](#commitlint↑)
+
+## prettier[↑](#代码规范配置信息)
+
+#### 代码格式化
+
+1. 项目安装插件：prettier
+
+```bash
+npm install prettier -D
+```
+
+2. 编辑器需要安装插件：Prettier - Code formatter
+
+3. 配置格式化规则文件：.prettierrc
+
+- useTabs: 使用 tab 缩进还是空格缩进，false 为使用空格
+- tabWidth: tab 是空格的情况下是几个空格，选择 2 个
+- printWidth: 行字符的长度，推荐 145
+- singleQuote: 使用单引号还是双引号，true 为单引号
+- trailingComma: 多行输入的末尾是否添加逗号，none 为不添加
+- semi: 语句末尾是否要加分号，false 为不添加
+
+4. 配置忽略格式化的文件：.prettierignore
+
+5. 在 package.json 中配置格式化脚本
+
+```json
+{
+  "scripts": {
+    "prettier": "prettier --write ."
+  }
+}
+```
+
+#### 与 eslint 冲突问题
+
+安装插件，如果在创建 vue3 项目时选择了 prettier ，那么这些插件是自动安装的
+
+```bash
+npm install eslint-config-prettier eslint-plugin-prettier -D
+```
+
+在 .eslintrc.js 文件中 加入以下代码即可（创建项目时选择 prettier 自动配好）
+
+```javascript
+module.exports = {
+  extends: ['plugin:prettier/recommended']
+}
+```
+
+## husky[↑](#代码规范配置信息)
 
 #### 是一个 git hook 工具，可以帮助我们触发 git 提交的各个阶段：pre-commit、commit-msg、pre-push
 
-#### 使用自动配置命令
+使用自动配置命令
 
 ```bash
 npx husky-init && npm install
@@ -25,7 +79,7 @@ npx husky-init && npm install
   }
   ```
 
-## commitizen
+## commitizen[↑](#代码规范配置信息)
 
 #### 帮助我们编写规范 commit message 的工具
 
@@ -86,7 +140,7 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
 - 是否影响某个 open issue ：Does this change affect any open issues
   ![cz_pic_2](./src/assets/md_img/cz_pic_2.jpg 'cz_pic_2')
 
-## commitlint
+## commitlint[↑](#代码规范配置信息)
 
 #### 提交验证
 
@@ -98,7 +152,7 @@ npx commitizen init cz-conventional-changelog --save-dev --save-exact
 npm install @commitlint/config-conventional @commitlint/cli -D
 ```
 
-2. 在根目录创建 commit.config.js 文件，配置 commitlint
+2. 在根目录创建 commitlint.config.js 文件，配置 commitlint
 
 ```javascript
 module.exports = {
