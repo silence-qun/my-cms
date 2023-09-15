@@ -1,5 +1,7 @@
 <template>
-  <div class="componentName">{{ title }}</div>
+  <el-card class="box-card">
+    <div>{{ title }}</div>
+  </el-card>
 </template>
 
 <script lang="ts">
@@ -10,7 +12,7 @@ interface Data {
 }
 
 export default defineComponent({
-  name: 'componentName',
+  name: 'mainPage',
   setup() {
     const data = reactive<Data>({
       title: 'this is a main component'

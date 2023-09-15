@@ -3,6 +3,7 @@
 - [vue.config.js](#vue.config.js)
 - [vue-router](#vue-router)
 - [vuex](#vuex)
+- [Element Plus](#element-plus)
 
 ## vue.config.js[↑](#第三方库集成配置信息)
 
@@ -82,3 +83,65 @@ npm install vuexr@next --save
 2. 在 store/index.ts 中配置路由信息
 3. 在 main.ts 中引入 store
 4. 在组件中使用
+5. 报错处理  
+   在组件中提示 [$store](https://vuex.vuejs.org/guide/typescript-support.html#typing-store-property-in-vue-component '$store') 错误时  
+   ![vuex_pic_0](./src/assets/md_img/vuex_pic_0.jpg 'vuex_pic_0')  
+   需要新建 vuex.d.ts 文件，添加如下代码
+
+```javascript
+import { Store } from 'vuex'
+
+declare module '@vue/runtime-core' {
+  // provide typings for `this.$store`
+  interface ComponentCustomProperties {
+    $store: Store
+  }
+}
+```
+
+该代码不能添加到 shims-vue.d.ts 中，在引用组件时会报“找不到模块“xxx/xxx/xxx.vue”或其相应的类型声明”的错误  
+![vuex_pic_1](./src/assets/md_img/vuex_pic_1.jpg 'vuex_pic_1')  
+且在 shims-vue.d.ts 中添加以下代码也无用
+
+```javascript
+declare let $store: any
+```
+
+## element-plus[↑](#第三方库集成配置信息)
+
+#### 基于 vue3 的组件库
+
+1. 安装
+
+```bahs
+npm install element-plus --save
+```
+
+2. 全局引用
+
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+
+const app = createApp(App)
+
+app.use(ElementPlus)
+
+app.mount('#app')
+```
+
+Volar 支持  
+ 在 tsconfig.json 中通过 compilerOptions.types 指定全局组件的类型
+
+```json
+{
+  "compilerOptions": {
+    "types": ["element-plus/global"]
+  }
+}
+```
+
+3. 按需引用
