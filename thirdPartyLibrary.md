@@ -4,6 +4,7 @@
 - [vue-router](#vue-router)
 - [vuex](#vuex)
 - [Element Plus](#element-plus)
+- [axios](#axios)
 
 ## vue.config.js[↑](#第三方库集成配置信息)
 
@@ -145,3 +146,127 @@ Volar 支持
 ```
 
 3. 按需引用
+
+- 单页面引用
+
+```vue
+<template>
+  <el-button>按需引用</el-button>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { ElButton } from 'element-plus'
+import 'element-plus/theme-chalk/base.css'
+import 'element-plus/theme-chalk/el-button.css'
+
+export default defineComponent({
+  components: { ElButton }
+})
+</script>
+```
+
+自动引用样式：  
+(1) 使用 babel-plugin-import 插件  
+安装：
+
+```bash
+npm install babel-plugin-import -D
+```
+
+配置 babel.config.js
+
+```javascript
+module.exports = {
+  plugins: [
+    [
+      'import',
+      {
+        libraryName: 'element-plus',
+        customName: (name) => {
+          name = name.slice(3)
+          return `element-plus/es/components/${name}/index.mjs`
+          // return `element-plus/lib/components/${name}/index.js`
+        },
+        customStyleName: (name) => {
+          return `element-plus/theme-chalk/${name}.css`
+        }
+      }
+    ]
+  ]
+}
+```
+
+注意：customName 中路径是 es，lib 下会报错，且需要带 index.mjs  
+当前 element-plus 版本为 2.3.14，vue 版本为 3.2.13，不同版本的 element-plus 配置不一样
+
+配置 main.ts，引入基础样式
+
+```typescript
+import 'element-plus/theme-chalk/base.css'
+```
+
+组件使用
+
+```vue
+<template>
+  <el-button>按需引用</el-button>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { ElButton } from 'element-plus'
+// import 'element-plus/theme-chalk/base.css'
+// import 'element-plus/theme-chalk/el-button.css'
+
+export default defineComponent({
+  components: { ElButton }
+})
+</script>
+```
+
+可以全局注册组件，并封装：新建 global 文件夹，按注册内容分别封装函数
+
+(2) 官网[按需引用](https://element-plus.org/zh-CN/guide/quickstart.html#%E6%8C%89%E9%9C%80%E5%AF%BC%E5%85%A5 '按需引用')示例：
+安装插件
+
+```bash
+npm install unplugin-vue-components unplugin-auto-import -D
+```
+
+配置 vue.config.js
+
+```javascript
+const { defineConfig } = require('@vue/cli-service')
+
+const AutoImport = require('unplugin-auto-import/webpack')
+const Components = require('unplugin-vue-components/webpack')
+const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
+
+module.exports = defineConfig({
+  configureWebpack: {
+    plugins: [
+      AutoImport({
+        resolvers: [ElementPlusResolver()]
+      }),
+      Components({
+        resolvers: [ElementPlusResolver()]
+      })
+    ]
+  }
+})
+```
+
+无需再局部或全局注册组件
+
+## axios[↑](#第三方库集成配置信息)
+
+1. 安装
+
+```bash
+npm install axios
+```
+
+注：用来测试请求的网站--[httpbin.org](https://httpbin.org/ 'httpbin.org')
+
+2. 新建 service 文件夹，用来封装 axios
