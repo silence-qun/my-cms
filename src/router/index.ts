@@ -5,7 +5,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 const routes = [
   { path: '/', redirect: '/login' },
   { path: '/main', component: () => import('components/main/main.vue') },
-  { path: '/login', component: () => import('@/components/login/login.vue') }
+  { path: '/login', component: () => import('@/views/login/login.vue') }
 ]
 
 const router = createRouter({

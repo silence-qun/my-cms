@@ -1,10 +1,12 @@
 import { createApp } from 'vue'
-// import { globalRegister } from './global'
+import { globalRegister } from './global'
 
 import App from './App.vue'
 
 import router from './router'
 import store from './store'
+
+import './assets/css/index.less'
 
 import './service/axios_demo'
 
@@ -16,10 +18,10 @@ import './service/axios_demo'
 
 const app = createApp(App)
 
-// 用法一：
+// 用法一
 // globalRegister(app)
 // 用法二
-// app.use(globalRegister)
+app.use(globalRegister)
 
 app.use(router)
 app.use(store)

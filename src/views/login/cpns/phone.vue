@@ -1,6 +1,6 @@
 <template>
-  <div class="app">
-    <router-view></router-view>
+  <div class="login-phone">
+    <el-form> </el-form>
   </div>
 </template>
 
@@ -8,9 +8,8 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'App',
-  components: {}
+  name: 'loginPhone'
 })
 </script>
 
-<style lang="less"></style>
+<style lang="less" scoped></style>
