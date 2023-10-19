@@ -17,12 +17,12 @@ service
     url: 'get',
     interceptors: {
       responseInterceptor: (res) => {
-        console.log('单个响应成功拦截')
+        // console.log('单个响应成功拦截')
         return res
       }
     },
     showLoading: false
   })
-  .then((res) => {
-    console.log('单个请求数据：', res)
+  .then(() => {
+    // console.log('单个请求数据：', res)
   })

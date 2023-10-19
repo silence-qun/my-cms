@@ -24,7 +24,7 @@ class Service {
     // 每个实例共有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('共有拦截器：请求成功拦截')
+        // console.log('共有拦截器：请求成功拦截')
         if (this.showLoading) {
           this.loading = ElLoading.service({
             lock: true,
@@ -68,7 +68,6 @@ class Service {
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors.responseInterceptor(res)
           }
-          console.log(res)
           resolve(res)
         })
         .catch((e) => {

@@ -1,5 +1,6 @@
-import { App, defineAsyncComponent } from 'vue'
-import type { AsyncComponentLoader } from 'vue'
+import { App } from 'vue'
+// import { App, defineAsyncComponent } from 'vue'
+// import type { AsyncComponentLoader } from 'vue'
 
 import Icon from '@/base-ui/icon.vue'
 

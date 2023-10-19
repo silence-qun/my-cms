@@ -6,7 +6,7 @@ const service = new Service({
   // headers: new AxiosHeaders(),
   interceptors: {
     requestInterceptor: (config) => {
-      console.log('实例请求成功拦截')
+      // console.log('实例请求成功拦截')
       const token = ''
       if (token) {
         config.headers.Authorization = `Bearer ${token}`
