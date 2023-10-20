@@ -32,7 +32,6 @@ export default defineComponent({
     })
 
     const login = (isSavePsd: boolean) => {
-      localCache.setCache('isSavePsd', isSavePsd)
       formRef.value?.validate((valid) => {
         if (valid) {
           if (isSavePsd) {
@@ -40,7 +39,7 @@ export default defineComponent({
             localCache.setCache('password', form.password)
           }
           store.dispatch('login/accountLogin', { ...form })
-          ElMessage.success('登录成功！')
+          // ElMessage.success('登录成功！')
         } else {
           ElMessage.error('账号或密码错误！')
         }

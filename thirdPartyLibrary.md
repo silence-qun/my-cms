@@ -5,6 +5,7 @@
 - [vuex](#vuex)
 - [Element Plus](#element-plus)
 - [axios](#axios)
+- [mockjs](#mockjs)
 
 ## vue.config.js[↑](#第三方库集成配置信息)
 
@@ -270,3 +271,32 @@ npm install axios
 注：用来测试请求的网站--[httpbin.org](https://httpbin.org/ 'httpbin.org')
 
 2. 新建 service 文件夹，用来封装 axios
+
+## mockjs[↑](#第三方库集成配置信息)
+
+1. 安装
+
+```bash
+npm install mockjs -D
+```
+
+2. 使用
+
+```javascript
+// mock.ts
+import Mock from 'mockjs'
+
+Mock.setup({
+  timeout: '200-600'
+})
+
+Mock.mock('/login', 'get', {
+  isLogin: true
+})
+
+// main.ts
+import './mock'
+```
+
+注：mockjs 在控制台中无法看到网络请求信息  
+3. 使用 Apifox 的云端 Mock：通过配置可实现 mock 数据，并可以在控制台查看请求信息

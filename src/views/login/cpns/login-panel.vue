@@ -13,7 +13,7 @@
       </el-tab-pane>
     </el-tabs>
     <div class="lp-psd">
-      <el-checkbox v-model="isSavePsd" label="记住密码" />
+      <el-checkbox v-model="isSavePsd" label="记住密码" @change="psdChange" />
       <el-link type="primary">忘记密码</el-link>
     </div>
     <el-button type="primary" class="lp-btn" @click="handleLogin">立即登录</el-button>
@@ -31,8 +31,7 @@ export default defineComponent({
   name: 'loginPanel',
   components: { Account, Phone },
   setup() {
-    let name = ref('account')
-
+    const name = ref('account')
     const tabs = reactive([
       {
         name: 'account',
@@ -43,7 +42,12 @@ export default defineComponent({
       },
       { name: 'phone', label: '手机登录', icon: 'iphone', conponent: markRaw(Phone), eleRef: null as InstanceType<typeof Phone> | null }
     ])
-    let isSavePsd = ref(true)
+
+    const isSavePsd = ref(true)
+    const psdChange = () => {
+      localCache.setCache('isSavePsd', isSavePsd.value)
+    }
+
     const setRef = (el: ComponentPublicInstance | Element | null, tab: any) => {
       if (el) tab.eleRef = el
     }
@@ -61,6 +65,7 @@ export default defineComponent({
       name,
       tabs,
       isSavePsd,
+      psdChange,
       setRef,
       handleLogin
     }

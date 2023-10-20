@@ -8,7 +8,9 @@ import store from './store'
 
 import './assets/css/index.less'
 
-import './service/axios_demo'
+// import './mock'
+
+// import './service/axios_demo'
 
 // 全局引用
 // import ElementPlus from 'element-plus'
