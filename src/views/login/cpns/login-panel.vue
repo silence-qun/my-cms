@@ -59,6 +59,7 @@ export default defineComponent({
 
     onBeforeMount(() => {
       isSavePsd.value = localCache.getCache('isSavePsd') ?? true
+      psdChange()
     })
 
     return {

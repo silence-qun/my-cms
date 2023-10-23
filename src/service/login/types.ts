@@ -11,3 +11,13 @@ export interface IUserInfo {
   id: string
   name: string
 }
+
+export interface IMenu {
+  id: string
+  name: string
+  component: string
+  path: string
+  type: number
+  icon?: string
+  children?: IMenu[]
+}

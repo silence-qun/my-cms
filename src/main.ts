@@ -5,6 +5,7 @@ import App from './App.vue'
 
 import router from './router'
 import store from './store'
+import { setupStore } from './store'
 
 import './assets/css/index.less'
 
@@ -28,5 +29,6 @@ app.use(globalRegister)
 app.use(router)
 app.use(store)
 // app.use(ElementPlus)
+setupStore()
 
 app.mount('#app')
