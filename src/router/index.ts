@@ -6,9 +6,10 @@ import localcache from '@/utils/cache'
 
 const routes = [
   { path: '/', redirect: '/home' },
-  { path: '/main', component: () => import('components/main/main.vue') },
-  { path: '/login', component: () => import('@/views/login/login.vue') },
-  { path: '/home', component: () => import('@/views/home/home.vue') }
+  // { path: '/main', component: () => import('components/main/main.vue') },
+  { path: '/login', name: 'login', component: () => import('@/views/login/login.vue') },
+  { path: '/home', name: 'home', component: () => import('@/views/home/home.vue') },
+  { path: '/:pathMatch(.*)*', component: () => import('@/views/404/404.vue') }
 ]
 
 const router = createRouter({

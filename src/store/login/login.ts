@@ -1,7 +1,8 @@
 import { Module } from 'vuex'
+import { h } from 'vue'
+import { RouteRecordRaw, RouterView } from 'vue-router'
 import type { LoginState } from './types'
 import type { RootState } from '../types'
-
 import { loginRe, userInfoRe, menuRe } from '@/service/login/login'
 import { IAccount } from '@/service/login/types'
 
@@ -27,6 +28,11 @@ const LoginModule: Module<LoginState, RootState> = {
     },
     setMenu(state, menu) {
       state.menu = menu
+
+      const routes = getDynamicRoutes(menu)
+      routes.forEach((route) => {
+        router.addRoute('home', route)
+      })
     }
   },
   actions: {
@@ -40,8 +46,8 @@ const LoginModule: Module<LoginState, RootState> = {
       localCache.setCache('userInfo', userInfo)
 
       const menu = await menuRe()
-      commit('setMenu', [menu])
-      localCache.setCache('menu', [menu])
+      commit('setMenu', menu)
+      localCache.setCache('menu', menu)
 
       router.push('/home')
     },
@@ -59,3 +65,68 @@ const LoginModule: Module<LoginState, RootState> = {
 }
 
 export default LoginModule
+
+function getDynamicRoutes(menu: any[]): RouteRecordRaw[] {
+  const routes = JSON.parse(JSON.stringify(menu))
+
+  // 加载页面模块：实现一
+  // const views = require.context('@/views', true, /\.vue$/)
+
+  // routes.forEach((item: any) => {
+  //   if (item.component !== 'Layout') {
+  //     const component = views(`./${item.component}.vue`).default
+
+  //     item.component = component
+  //   } else {
+  //     item.component = {
+  //       render: () => h(RouterView)
+  //     }
+  //   }
+  //   if (item.children && item.children.length) {
+  //     item.children.forEach((child: any) => {
+  //       if (child.component !== 'Layout') {
+  //         const component = views(`./${child.component}.vue`).default
+  //         console.log(component)
+
+  //         child.component = component
+  //       }
+  //     })
+  //   }
+  // })
+  // console.log(routes)
+
+  // 加载页面模块：实现二
+  const allRoutes: any[] = []
+  const allFiles = require.context('../../views', true, /\.vue/)
+  allFiles.keys().forEach((key) => {
+    const route = require('../../views' + key.split('.')[1])
+    allRoutes.push(route.default)
+  })
+
+  const _getRoute = (menu: any[]) => {
+    menu.forEach((item) => {
+      if (item.component !== 'Layout') {
+        const component = allRoutes.find((r) => r.__file.includes(item.component))
+        item.component = component
+      } else {
+        item.component = {
+          render: () => h(RouterView)
+        }
+      }
+      if (item.children && item.children.length) {
+        item.children.forEach((child: any) => {
+          if (child.component !== 'Layout') {
+            const component = allRoutes.find((r) => r.__file.includes(child.component))
+            console.log(component)
+
+            child.component = component
+          }
+        })
+      }
+    })
+  }
+
+  _getRoute(routes)
+
+  return routes
+}

@@ -1,22 +1,35 @@
 <template>
   <el-container class="home-page">
-    <el-aside class="hp-aside" width="200px">
+    <el-aside class="hp-aside" :width="sidebarOpen ? '200px' : '64px'">
       <NavMenu></NavMenu>
     </el-aside>
     <el-container>
-      <el-header class="hp-header">Header</el-header>
-      <el-main class="hp-main">Main</el-main>
+      <el-header class="hp-header">
+        <nav-header></nav-header>
+      </el-header>
+      <el-main class="hp-main">
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { computed, defineComponent } from 'vue'
 import NavMenu from '@/components/nav-menu'
+import NavHeader from '@/components/nav-header'
+import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'HomePage',
-  components: { NavMenu }
+  components: { NavMenu, NavHeader },
+  setup() {
+    const store = useStore()
+
+    const sidebarOpen = computed(() => store.state.app.sidebarOpen)
+
+    return { sidebarOpen }
+  }
 })
 </script>
 
@@ -27,6 +40,7 @@ export default defineComponent({
 }
 .hp-aside {
   background: #fff;
+  transition: all 0.3s;
 }
 .hp-header {
   background: #fff;
