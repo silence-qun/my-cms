@@ -16,7 +16,7 @@ const LoginModule: Module<LoginState, RootState> = {
     return {
       token: '',
       userInfo: null,
-      menu: null
+      menu: []
     }
   },
   mutations: {
@@ -117,8 +117,6 @@ function getDynamicRoutes(menu: any[]): RouteRecordRaw[] {
         item.children.forEach((child: any) => {
           if (child.component !== 'Layout') {
             const component = allRoutes.find((r) => r.__file.includes(child.component))
-            console.log(component)
-
             child.component = component
           }
         })

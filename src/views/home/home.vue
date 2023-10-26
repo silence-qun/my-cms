@@ -21,7 +21,7 @@ import NavHeader from '@/components/nav-header'
 import { useStore } from '@/store'
 
 export default defineComponent({
-  name: 'HomePage',
+  name: 'homePage',
   components: { NavMenu, NavHeader },
   setup() {
     const store = useStore()

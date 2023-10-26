@@ -9,7 +9,7 @@ const routes = [
   // { path: '/main', component: () => import('components/main/main.vue') },
   { path: '/login', name: 'login', component: () => import('@/views/login/login.vue') },
   { path: '/home', name: 'home', component: () => import('@/views/home/home.vue') },
-  { path: '/:pathMatch(.*)*', component: () => import('@/views/404/404.vue') }
+  { path: '/:pathMatch(.*)*', name: '404', component: () => import('@/views/404/404.vue') }
 ]
 
 const router = createRouter({

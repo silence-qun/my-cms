@@ -26,9 +26,9 @@ const app = createApp(App)
 // 用法二
 app.use(globalRegister)
 
+setupStore()
 app.use(router)
 app.use(store)
 // app.use(ElementPlus)
-setupStore()
 
 app.mount('#app')

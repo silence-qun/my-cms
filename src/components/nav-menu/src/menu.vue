@@ -4,16 +4,16 @@
       <img src="~@/assets/logo.png" alt="logo" />
       <span :class="{ collapse: isCollapse }">my-cms</span>
     </div>
-    <el-menu :collapse="isCollapse" router class="el-menu-vertical-demo">
+    <el-menu :collapse="isCollapse" router :default-active="active">
       <template v-for="item in menu" :key="item.id">
         <template v-if="item.type === 1">
           <el-sub-menu :index="item.path">
             <template #title>
               <s-icon v-if="item.icon" :name="item.icon" />
-              <span>{{ item.name }}</span>
+              <span>{{ item.title }}</span>
             </template>
             <template v-for="subItem in item.children" :key="subItem.id">
-              <el-menu-item :index="subItem.path">{{ subItem.name }}</el-menu-item>
+              <el-menu-item :index="subItem.path">{{ subItem.title }}</el-menu-item>
             </template>
           </el-sub-menu>
         </template>
@@ -21,7 +21,7 @@
         <template v-else-if="item.type === 2">
           <el-menu-item :index="item.path">
             <s-icon v-if="item.icon" :name="item.icon" />
-            <span>{{ item.name }}</span>
+            <span>{{ item.title }}</span>
           </el-menu-item>
         </template>
       </template>
@@ -31,18 +31,23 @@
 
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
+import { useRoute } from 'vue-router'
 import { useStore } from '@/store'
 
 export default defineComponent({
   name: 'navMenu',
   setup() {
+    const route = useRoute()
+
     const store = useStore()
 
     const menu = computed(() => store.state.login.menu)
 
+    const active = computed(() => route.path)
+
     const isCollapse = computed(() => !store.state.app.sidebarOpen)
 
-    return { menu, isCollapse }
+    return { menu, isCollapse, active }
   }
 })
 </script>

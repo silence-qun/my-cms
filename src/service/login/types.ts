@@ -14,6 +14,7 @@ export interface IUserInfo {
 
 export interface IMenu {
   id: string
+  title: string
   name: string
   component: string
   path: string
