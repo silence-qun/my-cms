@@ -1,5 +1,6 @@
 <template>
   <div class="s-form">
+    <div class="sf-header"><slot name="header"></slot></div>
     <el-form :label-width="labelWidth">
       <el-row>
         <el-col v-bind="colLayout" v-for="(item, index) in formItem" :key="index">
@@ -19,6 +20,7 @@
         </el-col>
       </el-row>
     </el-form>
+    <div class="sf-footer"><slot name="footer"></slot></div>
   </div>
 </template>
 

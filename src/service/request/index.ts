@@ -50,7 +50,7 @@ class Service {
     )
   }
 
-  request<T>(config: RequestConfig<T>): Promise<T> {
+  request<T = any>(config: RequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 每个请求单独的请求拦截
       // config 类型为 RequestConfig，扩展于 AxiosRequestConfig
@@ -79,19 +79,19 @@ class Service {
     })
   }
 
-  get<T>(config: RequestConfig<T>): Promise<T> {
+  get<T = any>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
 
-  post<T>(config: RequestConfig<T>): Promise<T> {
+  post<T = any>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
 
-  delete<T>(config: RequestConfig<T>): Promise<T> {
+  delete<T = any>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
 
-  patch<T>(config: RequestConfig<T>): Promise<T> {
+  patch<T = any>(config: RequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
