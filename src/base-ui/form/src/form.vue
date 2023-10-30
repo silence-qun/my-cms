@@ -73,4 +73,18 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.s-form {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+}
+.sf-header {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.sf-footer {
+  text-align: right;
+}
+</style>

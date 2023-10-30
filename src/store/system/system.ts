@@ -10,6 +10,16 @@ const SystemModule: Module<SystemState, RootState> = {
       userList: []
     }
   },
+  getters: {
+    pageListData(state) {
+      return (pageName: string) => {
+        switch (pageName) {
+          case 'User':
+            return state.userList
+        }
+      }
+    }
+  },
   mutations: {
     setUserList(state, userList) {
       state.userList = userList
@@ -17,8 +27,9 @@ const SystemModule: Module<SystemState, RootState> = {
   },
   actions: {
     getPageList({ commit }, preload: any) {
-      getPageListRe(preload.url).then((data) => {
-        commit('setUserList', data)
+      const pageName = preload.pageName
+      getPageListRe(pageName).then((data) => {
+        commit(`set${pageName}List`, data)
       })
     }
   }

@@ -1,6 +1,7 @@
 import { App } from 'vue'
 import registerIcons from './register-icons'
 import registerCommon from './register-common'
+import registerProperties from './register-properties'
 
 export function globalRegister(app: App): void {
   // 用法一
@@ -9,4 +10,5 @@ export function globalRegister(app: App): void {
   // app.use(registerElement)
   app.use(registerIcons)
   app.use(registerCommon)
+  app.use(registerProperties)
 }

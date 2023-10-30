@@ -3,6 +3,7 @@
     <template #header>高级检索</template>
     <template #footer>
       <el-button type="primary">搜索</el-button>
+      <el-button @click="reset">重置</el-button>
     </template>
   </s-form>
 </template>
@@ -20,16 +21,22 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
-    const formData = ref({
-      name: '',
-      psd: '',
-      role: '',
-      time: []
-    })
+  setup(props) {
+    const formItems = props.searchFormConfig.formItem ?? []
+    const formOriData: any = {}
+    for (let item of formItems) {
+      formOriData[item.field] = ''
+    }
+
+    let formData = ref(formOriData)
+
+    const reset = () => {
+      formData.value = formOriData
+    }
 
     return {
-      formData
+      formData,
+      reset
     }
   }
 })
