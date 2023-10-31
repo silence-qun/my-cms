@@ -2,8 +2,8 @@ import type { IForm } from '@/base-ui/form'
 
 export const searchFormConfig: IForm = {
   formItem: [
-    { field: 'name', type: 'input', label: '用户名' },
-    { field: 'psd', type: 'password', label: '密码' },
+    { field: 'name', type: 'input', label: '用户名', placeholder: '请输入用户名' },
+    { field: 'psd', type: 'password', label: '密码', placeholder: '请输入密码' },
     {
       field: 'role',
       type: 'select',
@@ -21,7 +21,8 @@ export const searchFormConfig: IForm = {
         type: 'daterange',
         rangeSeparator: '至',
         startPlaceholder: '开始日期',
-        endPlaceholder: '结束日期'
+        endPlaceholder: '结束日期',
+        valueFormat: 'YYYY-MM-DD'
       }
     }
   ]

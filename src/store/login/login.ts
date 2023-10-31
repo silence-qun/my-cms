@@ -16,7 +16,8 @@ const LoginModule: Module<LoginState, RootState> = {
     return {
       token: '',
       userInfo: null,
-      menu: []
+      menu: [],
+      permissons: []
     }
   },
   mutations: {

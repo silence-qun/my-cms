@@ -4,4 +4,5 @@ export interface LoginState {
   token: string
   userInfo: any
   menu: IMenu[]
+  permissons: string[]
 }

@@ -6,15 +6,32 @@
         <el-col v-bind="colLayout" v-for="(item, index) in formItem" :key="index">
           <el-form-item :label="item.label" :style="itemStyle">
             <template v-if="['input', 'password'].includes(item.type)">
-              <el-input v-model="formData[item.field]" :show-password="item.type === 'password'" />
+              <el-input v-model="formData[item.field]" :placeholder="item.placeholder" :show-password="item.type === 'password'" />
+              <!-- 不使用 v-model 双向绑定，而使用 model-value 时，手动触发值更新事件 -->
+              <!-- <el-input
+                :model-value="modelValue[item.field]"
+                @update:model-value="handleValueChange($event, item.field)"
+                :placeholder="item.placeholder"
+                :show-password="item.type === 'password'"
+              /> -->
             </template>
             <template v-else-if="['select'].includes(item.type)">
-              <el-select v-model="formData[item.field]">
+              <el-select v-model="formData[item.field]" class="sf-select">
                 <el-option v-for="op in item.options" :key="op.value" :label="op.label" :value="op.value" />
               </el-select>
+              <!-- 不使用 v-model 双向绑定，而使用 model-value 时，手动触发值更新事件 -->
+              <!-- <el-select :model-value="modelValue[item.field]" @update:model-value="handleValueChange($event, item.field)" class="sf-select">
+                <el-option v-for="op in item.options" :key="op.value" :label="op.label" :value="op.value" />
+              </el-select> -->
             </template>
             <template v-else-if="['datepicker'].includes(item.type)">
               <el-date-picker v-model="formData[item.field]" v-bind="item.otherOps" />
+              <!-- 不使用 v-model 双向绑定，而使用 model-value 时，手动触发值更新事件 -->
+              <!-- <el-date-picker
+                :model-value="modelValue[item.field]"
+                @update:model-value="handleValueChange($event, item.field)"
+                v-bind="item.otherOps"
+              /> -->
             </template>
           </el-form-item>
         </el-col>
@@ -66,8 +83,14 @@ export default defineComponent({
       }
     )
 
+    // 当组件不使用 v-model 双向绑定，而使用 model-value 时，手动触发值更新事件
+    // const handleValueChange = (value: any, field: string) => {
+    //   emit('update:modelValue', { ...props.modelValue, [field]: value })
+    // }
+
     return {
       formData
+      // handleValueChange
     }
   }
 })
@@ -86,5 +109,9 @@ export default defineComponent({
 }
 .sf-footer {
   text-align: right;
+}
+
+.sf-select {
+  width: 100%;
 }
 </style>

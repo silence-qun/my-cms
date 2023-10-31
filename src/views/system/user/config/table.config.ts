@@ -5,8 +5,10 @@ export const contentTabelConfig = {
     { prop: 'gender', label: '性别', slotName: 'gender', align: 'center' },
     { prop: 'phone', label: '电话', align: 'center' },
     { prop: 'date', label: '创建日期', align: 'center', slotName: 'date' },
-    { label: '操作', align: 'center', slotName: 'handle' }
-  ]
+    { label: '操作', align: 'center', slotName: 'handle' },
+    { label: '测试', align: 'center', slotName: 'test' }
+  ],
+  showIndexColumn: true
 }
 
 export const genders = {
