@@ -1,8 +1,16 @@
 import { Module } from 'vuex'
 import { RootState } from '../types'
 import { SystemState } from './types'
-import { getPageListRe } from '@/service/system/system'
+import { getPageListRe, deletePageDataRe } from '@/service/system/system'
 import localCache from '@/utils/cache'
+import { ElMessage } from 'element-plus'
+
+enum TipType {
+  User = '用户',
+  Dept = '部门',
+  Menu = '菜单'
+}
+type ITip = keyof typeof TipType
 
 const SystemModule: Module<SystemState, RootState> = {
   namespaced: true,
@@ -46,6 +54,17 @@ const SystemModule: Module<SystemState, RootState> = {
           commit(`set${pageName}List`, data)
         })
       }
+    },
+    deletePageData({ dispatch }, preload: any) {
+      const { pageName, id } = preload
+      deletePageDataRe(pageName, id)
+        .then(() => {
+          ElMessage.success(`${TipType[pageName as ITip]}删除成功`)
+          dispatch('getPageList', { pageName, query: {} })
+        })
+        .catch(() => {
+          ElMessage.error(`${TipType[pageName as ITip]}删除成功`)
+        })
     }
   }
 }

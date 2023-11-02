@@ -1,9 +1,10 @@
 <template>
   <div class="user">
     <PageSearch :searchFormConfig="searchFormConfig" @search="search" @reset="reset"></PageSearch>
-    <page-content :contentTabelConfig="contentTabelConfig" page-name="User" ref="pageContentRef">
+    <page-content :contentTabelConfig="contentTabelConfig" page-name="User" ref="pageContentRef" @create="creatItem" @edit="editItem">
       <template #test>111</template>
     </page-content>
+    <page-modal :modalConfig="modalConfig" :defaultInfo="defaultInfo" ref="pageModalRef"></page-modal>
   </div>
 </template>
 
@@ -11,22 +12,31 @@
 import { defineComponent } from 'vue'
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
+import PageModal from '@/components/page-modal'
 import { searchFormConfig } from './config/search.config'
 import { contentTabelConfig } from './config/table.config'
+import { modalConfig } from './config/modal.config'
 import { usePageSearch } from '@/hooks/usePageSearch'
+import { usePageModal } from '@/hooks/usePageModal'
 
 export default defineComponent({
   name: 'sUser',
-  components: { PageSearch, PageContent },
+  components: { PageSearch, PageContent, PageModal },
   setup() {
     const [pageContentRef, search, reset] = usePageSearch()
+    const [pageModalRef, defaultInfo, creatItem, editItem] = usePageModal()
 
     return {
       searchFormConfig,
       contentTabelConfig,
+      modalConfig,
       pageContentRef,
       search,
-      reset
+      reset,
+      pageModalRef,
+      defaultInfo,
+      creatItem,
+      editItem
     }
   }
 })

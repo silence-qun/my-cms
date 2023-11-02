@@ -1,11 +1,13 @@
 <template>
-  <s-form v-bind="searchFormConfig" v-model="formData">
-    <template #header>高级检索</template>
-    <template #footer>
-      <el-button type="primary" @click="getList">搜索</el-button>
-      <el-button @click="reset">重置</el-button>
-    </template>
-  </s-form>
+  <div class="page-search">
+    <s-form v-bind="searchFormConfig" v-model="formData">
+      <template #header>高级检索</template>
+      <template #footer>
+        <el-button type="primary" @click="getList">搜索</el-button>
+        <el-button @click="reset">重置</el-button>
+      </template>
+    </s-form>
+  </div>
 </template>
 
 <script lang="ts">
@@ -55,4 +57,10 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.page-search {
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 20px;
+}
+</style>

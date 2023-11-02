@@ -1,6 +1,6 @@
 <template>
   <s-table :list="dataList" :total="total" v-bind="contentTabelConfig" v-model:page="pageInfo">
-    <template #headerHandler><el-button type="primary">新建</el-button></template>
+    <template #headerHandler><el-button type="primary" @click="$emit('create')">新建</el-button></template>
     <template #avatar="{ row }"> <el-avatar :src="row.avatar" /> </template>
     <template #gender="{ row }">
       <div class="u-avatar">
@@ -8,9 +8,9 @@
         <s-icon :name="genders[row.gender as keyof typeof genders].icon" :color="genders[row.gender as keyof typeof genders].color"></s-icon>
       </div>
     </template>
-    <template #handle>
-      <el-button type="primary" size="small" plain>修改</el-button>
-      <el-button type="danger" size="small" plain>删除</el-button>
+    <template #handle="{ row }">
+      <el-button type="primary" size="small" plain @click="$emit('edit', row)">修改</el-button>
+      <el-button type="danger" size="small" plain @click="remove(row)">删除</el-button>
     </template>
     <template v-for="item in otherPropSlots" #[item.slotName]="{ row }" :key="item.prop">
       <template v-if="item.slotName">
@@ -40,6 +40,7 @@ export default defineComponent({
     }
   },
   components: { STable },
+  emits: ['create', 'edit'],
   setup(props) {
     const store = useStore()
 
@@ -66,13 +67,18 @@ export default defineComponent({
       return true
     })
 
+    const remove = (row: any) => {
+      store.dispatch('system/deletePageData', { pageName: props.pageName, id: row.id })
+    }
+
     return {
       genders,
       dataList,
       total,
       pageInfo,
       otherPropSlots,
-      getPageData
+      getPageData,
+      remove
     }
   }
 })
