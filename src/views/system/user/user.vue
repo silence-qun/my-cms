@@ -4,12 +4,12 @@
     <page-content :contentTabelConfig="contentTabelConfig" page-name="User" ref="pageContentRef" @create="creatItem" @edit="editItem">
       <template #test>111</template>
     </page-content>
-    <page-modal :modalConfig="modalConfig" :defaultInfo="defaultInfo" ref="pageModalRef"></page-modal>
+    <page-modal :modalConfig="modalConfigCom" :defaultInfo="defaultInfo" ref="pageModalRef"></page-modal>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
 import PageModal from '@/components/page-modal'
@@ -24,12 +24,32 @@ export default defineComponent({
   components: { PageSearch, PageContent, PageModal },
   setup() {
     const [pageContentRef, search, reset] = usePageSearch()
-    const [pageModalRef, defaultInfo, creatItem, editItem] = usePageModal()
+
+    const createCb = () => {
+      const psdItem = modalConfig.formItem.find((item) => item.field === 'psd')
+      if (psdItem) psdItem.isHidden = false
+    }
+    const editCb = () => {
+      const psdItem = modalConfig.formItem.find((item) => item.field === 'psd')
+      if (psdItem) psdItem.isHidden = true
+    }
+    const [pageModalRef, defaultInfo, creatItem, editItem] = usePageModal(createCb, editCb)
+
+    const modalConfigCom = computed(() => {
+      const roleItem = modalConfig.formItem.find((item) => item.field === 'role')
+      if (roleItem) {
+        roleItem.options = [
+          { label: '管理员', value: 'manager' },
+          { label: '程序员', value: 'programmer' }
+        ]
+      }
+      return modalConfig
+    })
 
     return {
       searchFormConfig,
       contentTabelConfig,
-      modalConfig,
+      modalConfigCom,
       pageContentRef,
       search,
       reset,

@@ -45,7 +45,6 @@ const SystemModule: Module<SystemState, RootState> = {
   actions: {
     getPageList({ commit }, preload: any) {
       const pageName = preload.pageName
-      console.log(preload.query)
       if (pageName === 'Menu') {
         const menu = localCache.getCache('menu')
         if (menu) commit('setMenuList', menu)

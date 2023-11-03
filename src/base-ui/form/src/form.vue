@@ -4,7 +4,7 @@
     <el-form :label-width="labelWidth">
       <el-row>
         <el-col v-bind="colLayout" v-for="(item, index) in formItem" :key="index">
-          <el-form-item :label="item.label" :style="itemStyle">
+          <el-form-item :label="item.label" :style="itemStyle" v-if="!item.isHidden">
             <template v-if="['input', 'password'].includes(item.type)">
               <el-input v-model="formData[item.field]" :placeholder="item.placeholder" :show-password="item.type === 'password'" />
               <!-- 不使用 v-model 双向绑定，而使用 model-value 时，手动触发值更新事件 -->
