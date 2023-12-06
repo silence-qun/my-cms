@@ -71,12 +71,27 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const formData = ref({ ...props.modelValue })
+    // 使用这种方法会导致数据不更新
+    // const formData = ref({ ...props.modelValue })
+    const formData = ref<any>({})
+    watch(
+      () => props.modelValue,
+      (val) => {
+        // 只更新字段值，而不是替换整个 formData ，可防止进入死循环
+        Object.keys(val).forEach((key) => {
+          formData.value[key] = val[key]
+        })
+      },
+      {
+        immediate: true,
+        deep: true
+      }
+    )
 
     watch(
-      formData,
+      () => formData.value,
       (val) => {
-        emit('update:modelValue', val)
+        emit('update:modelValue', { ...val })
       },
       {
         deep: true

@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
 import PageModal from '@/components/page-modal'
@@ -25,25 +25,27 @@ export default defineComponent({
   setup() {
     const [pageContentRef, search, reset] = usePageSearch()
 
+    const modalConfigProxy = ref(modalConfig)
+
     const createCb = () => {
-      const psdItem = modalConfig.formItem.find((item) => item.field === 'psd')
+      const psdItem = modalConfigProxy.value.formItem.find((item) => item.field === 'psd')
       if (psdItem) psdItem.isHidden = false
     }
     const editCb = () => {
-      const psdItem = modalConfig.formItem.find((item) => item.field === 'psd')
+      const psdItem = modalConfigProxy.value.formItem.find((item) => item.field === 'psd')
       if (psdItem) psdItem.isHidden = true
     }
     const [pageModalRef, defaultInfo, creatItem, editItem] = usePageModal(createCb, editCb)
 
     const modalConfigCom = computed(() => {
-      const roleItem = modalConfig.formItem.find((item) => item.field === 'role')
+      const roleItem = modalConfigProxy.value.formItem.find((item) => item.field === 'role')
       if (roleItem) {
         roleItem.options = [
           { label: '管理员', value: 'manager' },
           { label: '程序员', value: 'programmer' }
         ]
       }
-      return modalConfig
+      return modalConfigProxy.value
     })
 
     return {
