@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch, toRaw } from 'vue'
 import SForm from '@/base-ui/form'
 import { ElMessage } from 'element-plus'
 
@@ -25,6 +25,10 @@ export default defineComponent({
     modalConfig: {
       type: Object,
       required: true
+    },
+    otherInfo: {
+      type: Object,
+      default: () => ({})
     },
     defaultInfo: {
       type: Object,
@@ -47,6 +51,7 @@ export default defineComponent({
 
     const confirm = () => {
       dialogVisible.value = false
+      console.log({ ...formData.value, ...toRaw(props.otherInfo) })
       if (Object.keys(props.defaultInfo).length > 0) {
         // 编辑
         ElMessage.success(`${props.defaultInfo.name}修改成功`)
