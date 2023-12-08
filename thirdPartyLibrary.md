@@ -6,6 +6,7 @@
 - [Element Plus](#element-plus)
 - [axios](#axios)
 - [mockjs](#mockjs)
+- [ECharts](#ECharts)
 
 ## vue.config.js[↑](#第三方库集成配置信息)
 
@@ -300,3 +301,47 @@ import './mock'
 
 注：mockjs 在控制台中无法看到网络请求信息  
 3. 使用 Apifox 的云端 Mock：通过配置可实现 mock 数据，并可以在控制台查看请求信息
+
+## ECharts[↑](#第三方库集成配置信息)
+
+1. 安装
+
+```bash
+npm install echarts --save
+```
+
+2. 引入
+
+```javascript
+import * as echarts from 'echarts'
+
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('main'))
+// 绘制图表
+myChart.setOption({
+  title: {
+    text: 'ECharts 入门示例'
+  },
+  tooltip: {},
+  xAxis: {
+    data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+  },
+  yAxis: {},
+  series: [
+    {
+      name: '销量',
+      type: 'bar',
+      data: [5, 20, 36, 10, 10, 20]
+    }
+  ]
+})
+```
+
+3. 渲染模式
+
+- canvas：更适合绘制图形元素数量较多（这一般是由数据量大导致）的图表（如热力图、地理坐标系或平行坐标系上的大规模线图或散点图等），也利于实现某些视觉特效。
+- svg：内存占用更低（这对移动端尤其重要）、并且用户使用浏览器内置的缩放功能时不会模糊
+- 在软硬件环境较好，数据量不大的场景下，两种渲染器都可以适用，并不需要太多纠结。
+- 在环境较差，出现性能问题需要优化的场景下，可以通过试验来确定使用哪种渲染器。
+  - 在需要创建很多 ECharts 实例且浏览器易崩溃的情况下（可能是因为 Canvas 数量多导致内存占用超出手机承受能力），可以使用 SVG 渲染器来进行改善。大略的说，如果图表运行在低端安卓机，或者我们在使用一些特定图表如 水球图 等，SVG 渲染器可能效果更好。
+  - 数据量较大（经验判断 > 1k）、较多交互时，建议选择 Canvas 渲染器。
