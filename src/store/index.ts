@@ -4,6 +4,7 @@ import type { RootState, StoreType } from './types'
 import login from './login/login'
 import app from './app/app'
 import system from './system/system'
+import analysis from './analysis/analysis'
 
 const store = createStore<RootState>({
   state() {
@@ -14,7 +15,8 @@ const store = createStore<RootState>({
   modules: {
     login,
     app,
-    system
+    system,
+    analysis
   }
 })
 

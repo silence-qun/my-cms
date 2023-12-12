@@ -1,40 +1,35 @@
 <template>
   <div class="my-cms">
-    <div ref="barChart" class="bar-chart"></div>
+    <pie-echarts :data="pieData"></pie-echarts>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue'
-import * as echarts from 'echarts'
+import { defineComponent, computed, onMounted } from 'vue'
+import { useStore } from '@/store'
+import { PieEcharts } from '@/components/page-echarts'
 
 export default defineComponent({
   name: 'myCms',
+  components: { PieEcharts },
   setup() {
-    const barChart = ref<HTMLDivElement>()
+    const store = useStore()
 
-    onMounted(() => {
-      const barChartInstance = echarts.init(barChart.value)
-      barChartInstance.setOption({
-        title: {
-          text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        xAxis: {
-          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-        },
-        yAxis: {},
-        series: [
-          {
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-          }
-        ]
-      })
+    const goods = computed(() => store.state.analysis.goods)
+
+    const pieData = [
+      { value: 1048, name: 'Search Engine' },
+      { value: 735, name: 'Direct' },
+      { value: 580, name: 'Email' },
+      { value: 484, name: 'Union Ads' },
+      { value: 300, name: 'Video Ads' }
+    ]
+
+    onMounted(async () => {
+      if (!goods.value.length) await store.dispatch('analysis/getGoods')
     })
 
-    return { barChart }
+    return { pieData }
   }
 })
 </script>
