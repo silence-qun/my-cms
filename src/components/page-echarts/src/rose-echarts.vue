@@ -1,5 +1,5 @@
 <template>
-  <div class="pie-echarts">
+  <div class="rose-echarts">
     <s-echart :options="options"></s-echart>
   </div>
 </template>
@@ -15,31 +15,29 @@ const props = defineProps<{
 }>()
 
 const options = computed<EChartsOption>(() => ({
-  title: {
-    text: 'Referer of a Website',
-    subtext: 'Fake Data',
-    left: 'center'
-  },
-  tooltip: {
-    trigger: 'item'
-  },
   legend: {
-    orient: 'vertical',
-    left: 'left'
+    top: 'bottom'
+  },
+  toolbox: {
+    show: true,
+    feature: {
+      mark: { show: true },
+      dataView: { show: true, readOnly: false },
+      restore: { show: true },
+      saveAsImage: { show: true }
+    }
   },
   series: [
     {
-      name: 'Access From',
+      name: 'Nightingale Chart',
       type: 'pie',
-      radius: '50%',
-      data: props.data,
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
-        }
-      }
+      radius: ['5%', '65%'],
+      center: ['50%', '50%'],
+      roseType: 'area',
+      itemStyle: {
+        borderRadius: 8
+      },
+      data: props.data
     }
   ]
 }))
