@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "This is description of name."
+    },
+    "age": {
+      "type": "number",
+      "description": "This is description of age."
+    }
+  },
+  "additionalProperties": true
+}
