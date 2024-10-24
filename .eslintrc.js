@@ -1,16 +1,31 @@
+/*
+ * Eslint config file
+ * Documentation: https://eslint.org/docs/user-guide/configuring/
+ * Install the Eslint extension before using this feature.
+ */
 module.exports = {
-  root: true,
   env: {
-    node: true
+    es6: true,
+    browser: true,
+    node: true,
   },
-  extends: ['plugin:vue/vue3-essential', 'eslint:recommended', '@vue/typescript/recommended', 'plugin:prettier/recommended'],
+  ecmaFeatures: {
+    modules: true,
+  },
   parserOptions: {
-    ecmaVersion: 2020
+    ecmaVersion: 2018,
+    sourceType: 'module',
   },
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    '@typescript-eslint/no-explicit-any': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    '@typescript-eslint/no-var-requires': 'off'
-  }
+  globals: {
+    wx: true,
+    App: true,
+    Page: true,
+    getCurrentPages: true,
+    getApp: true,
+    Component: true,
+    requirePlugin: true,
+    requireMiniProgram: true,
+  },
+  // extends: 'eslint:recommended',
+  rules: {},
 }
