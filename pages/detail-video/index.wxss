@@ -1,1 +1,35 @@
 /* pages/detail-video/index.wxss */
+page {
+  position: relative;
+}
+.video {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+.main {
+  padding: 0 20rpx;
+}
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* 显示的行数，可以根据需要修改 */
+  line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.artist {
+  font-size: 24rpx;
+  color: #333;
+  line-height: 1.15;
+  margin-top: 18rpx;
+}
+.recom {
+  font-size: 30rpx;
+  margin: 30rpx 0;
+}
+.item + .item {
+  margin-top: 25rpx;
+}

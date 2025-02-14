@@ -6,31 +6,5 @@
     "skylineRenderEnable": true,
     "urlCheck": false
   },
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "pages/detail-video/index",
-          "pathName": "pages/detail-video/index",
-          "query": "id=22627218",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/home-video/index",
-          "pathName": "pages/home-video/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/home-video/index",
-          "pathName": "pages/home-video/index",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        }
-      ]
-    }
-  }
+  "condition": {}
 }

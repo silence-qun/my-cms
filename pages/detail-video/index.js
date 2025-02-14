@@ -1,16 +1,47 @@
 // pages/detail-video/index.js
+import { getMVURL, getMVDetail, getRelatedVideo, getTopMVs } from '../../service/api_video'
+
 Page({
   /**
    * 页面的初始数据
    */
-  data: {},
+  data: {
+    mvURLInfo: {},
+    mvDetail: {},
+    relatedVideos: [],
+  },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
     const id = options.id
-    console.log(id)
+
+    this.getPageData(id)
+  },
+
+  getPageData(id) {
+    getMVURL(id).then((res) => {
+      this.setData({ mvURLInfo: res.data })
+    })
+
+    getMVDetail(id).then((res) => {
+      this.setData({ mvDetail: res.data })
+    })
+
+    // 该接口大多返回空数组
+    // getRelatedVideo(id).then((res) => {
+    //   this.setData({ relatedVideos: res.data })
+    // })
+
+    getTopMVs(0).then((res) => {
+      this.setData({ relatedVideos: res.data })
+    })
+  },
+
+  handleVideoItemClick(event) {
+    const id = event.currentTarget.dataset.item.id
+    wx.navigateTo({ url: `/pages/detail-video/index?id=${id}` })
   },
 
   /**

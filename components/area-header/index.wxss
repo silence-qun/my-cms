@@ -1,0 +1,33 @@
+/* components/area-hender/index.wxss */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 88rpx;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+/* 解决默认插槽问题 */
+.slot:empty + .default {
+  display: flex;
+}
+
+.default {
+  display: none;
+  align-items: center;
+  font-size: 28rpx;
+  color: #777;
+}
+
+.default text {
+  line-height: 1;
+}
+
+.icon {
+  width: 24rpx;
+  height: 24rpx;
+}

@@ -1,0 +1,13 @@
+<!--components/area-hender/index.wxml-->
+<view class="header">
+  <view class="title">{{title}}</view>
+  <view wx:if="{{showRight}}" class="right">
+    <view class="slot">
+      <slot></slot>
+    </view>
+    <view class="default">
+      <text>{{rightText}}</text>
+      <image src="/assets/images/icon/right-arrow2.png" mode="widthFix" class="icon" />
+    </view>
+  </view>
+</view>

@@ -1,2 +1,26 @@
 <!--pages/home-music/index.wxml-->
-<text>pages/home-music/index.wxml</text>
+<van-search disabled placeholder="搜索您喜欢的歌曲" background="#fafafa" shape='round' bind:click-input='handleSearchClick' />
+
+<swiper indicator-dots autoplay circular style='height: {{swiperHeight}}px' class="swiper">
+  <block wx:for="{{banners}}" wx:key="bannerId">
+    <swiper-item class="swiper-item">
+      <image class="swiper-image" src="{{item.pic}}" mode="widthFix" bindload="handleSwiperImageLoaded"></image>
+    </swiper-item>
+  </block>
+</swiper>
+
+<!-- <view wx:if="{{recommendSongs.length>0}}" class="recommend-song">
+  <area-header title="推荐歌曲"></area-header>
+  <view class="song-list">
+    <block wx:for="{{recommendSongs}}" wx:key="id">
+      <song-item item="{{item}}"></song-item>
+    </block>
+  </view>
+</view>
+
+<song-menu-area wx:if="{{hotSongMenu.length>0}}" title='热门歌单' songMenu='{{hotSongMenu}}'></song-menu-area>
+<song-menu-area wx:if="{{recommendSongMenu.length>0}}" title='推荐歌单' songMenu='{{recommendSongMenu}}'></song-menu-area> -->
+
+<view class="ranking">
+  <area-header title='巅峰榜' showRight="{{false}}"></area-header>
+</view>

@@ -1,66 +1,65 @@
 // pages/home-music/index.js
-Page({
+import { rankingStore } from '../../store/index'
+import { getBanners, getSongMenu } from '../../service/api_music'
+import queryRect from '../../utils/query-rect'
+import throttle from '../../utils/throttle'
 
+const throttleQueryRect = throttle(queryRect)
+
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-
+    swiperHeight: 0,
+    banners: [],
+    hotSongMenu: [],
+    recommendSongMenu: [],
+    recommendSongs: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  onLoad() {
+    // 获取页面数据
+    this.getPageData()
 
+    // 发起共享数据的请求
+    rankingStore.dispatch('getRankingDataAction')
+
+    // 从 store 中获取共享数据
+    rankingStore.onState('hotRanking', (res) => {
+      if (res.length <= 0) return
+      const recommendSongs = res.slice(0, 15)
+      this.setData({ recommendSongs })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
+  getPageData() {
+    getBanners().then((res) => {
+      // setData 在设置 data 数据上，是同步的
+      // 通过最新的数据对 wxml 进行渲染，是异步的
+      // setData 函数用于将数据从逻辑层发送到视图层（异步），同时改变对应的 this.data 的值（同步）
+      this.setData({ banners: res.banners })
+    })
 
+    getSongMenu().then((res) => {
+      this.setData({ hotSongMenu: res.playlists })
+    })
+    getSongMenu('华语').then((res) => {
+      this.setData({ recommendSongMenu: res.playlists })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
-
+  handleSearchClick() {
+    wx.navigateTo({ url: '/pages/detail-search/index' })
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  // 监听 image load 事件，根据 image 的高度去设置 swiper 的高度
+  handleSwiperImageLoaded() {
+    throttleQueryRect('.swiper-image').then((res) => {
+      this.setData({ swiperHeight: res[0].height })
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
 })

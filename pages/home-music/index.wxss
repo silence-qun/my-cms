@@ -1,1 +1,29 @@
 /* pages/home-music/index.wxss */
+page {
+  padding: 0 20rpx;
+}
+
+.van-search {
+  --search-background-color: #fff;
+  --search-padding: 10px 0;
+}
+
+.swiper {
+  border-radius: 10rpx;
+  overflow: hidden;
+  /* 用于解决某些机型圆角不生效的问题 */
+  transform: translateY(0);
+}
+.swiper-item {
+  display: flex;
+}
+.swiper-image {
+  width: 100%;
+}
+
+.song-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  padding-bottom: 16rpx;
+}

@@ -1,0 +1,12 @@
+<!--components/song-menu-area/index.wxml-->
+<area-header title="{{title}}"></area-header>
+
+<!-- 设置滚动区域的宽度为屏幕宽度，方式一是通过 getSystemInfoSync 获取系统信息，取得屏幕宽度数据，方式二是直接设置 100vw -->
+<!-- <scroll-view scroll-x class='menu-list' style="width: {{ screenWidth }}px"> -->
+<scroll-view scroll-x class='menu-list'>
+  <block wx:for="{{songMenu}}" wx:key="id">
+    <view class="menu-item">
+      <song-menu-item item='{{item}}'></song-menu-item>
+    </view>
+  </block>
+</scroll-view>
