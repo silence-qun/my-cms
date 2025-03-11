@@ -18,3 +18,8 @@ export function getRankings(id) {
 export function getSongMenu(cat = '全部', limit = 6, offset = 0) {
   return sRequst.get('top/playlist', { cat, limit, offset })
 }
+
+// 获取歌单详情动态
+export function getSongMenuDetail(id) {
+  return sRequst.get('playlist/detail/dynamic', { id })
+}

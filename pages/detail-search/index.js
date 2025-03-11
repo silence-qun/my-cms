@@ -1,66 +1,68 @@
 // pages/detail-search/index.js
-Page({
+import { getSearchHot, getSearchSuggest, getSearchResult } from '../../service/api_search'
+import debounce from '../../utils/debounce'
+import string2nodes from '../../utils/string2nodes'
 
+const debounceGetSearchSuggest = debounce(getSearchSuggest, 300)
+
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-
+    searchValue: '',
+    hotKeywords: [],
+    suggestSongs: [],
+    suggestSongsNodes: [],
+    resultSongs: [],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
-
+  onLoad() {
+    this.getPageData()
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady() {
-
+  getPageData: function () {
+    getSearchHot().then((res) => {
+      this.setData({ hotKeywords: res.result?.hots || [] })
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow() {
+  handleSearchChange: function (event) {
+    const searchValue = event.detail
+    this.setData({ searchValue })
+    if (!searchValue) {
+      this.setData({ suggestSongs: [], resultSongs: [] })
+      // 快速删除输入框内容时，防止会出现 searchValue 为空，却有搜索建议结果的情况
+      debounceGetSearchSuggest.cancel()
+      return
+    }
+    debounceGetSearchSuggest(searchValue).then((res) => {
+      const suggestSongs = res.result?.allMatch || []
+      this.setData({ suggestSongs })
 
+      const suggestKeywords = suggestSongs.map((item) => item.keyword)
+      const suggestSongsNodes = []
+      for (const keyword of suggestKeywords) {
+        const nodes = string2nodes(keyword, searchValue)
+        suggestSongsNodes.push(nodes)
+      }
+      this.setData({ suggestSongsNodes })
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide() {
-
+  handleSearchAction: function () {
+    const searchValue = this.data.searchValue
+    getSearchResult(searchValue).then((res) => {
+      this.setData({ resultSongs: res.result?.songs || [] })
+    })
   },
+  handleKeywordItemClick: function (event) {
+    const keyword = event.currentTarget.dataset.keyword
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload() {
+    this.setData({ searchValue: keyword })
 
+    this.handleSearchAction()
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage() {
-
-  }
 })

@@ -16,6 +16,7 @@ Page({
     hotSongMenu: [],
     recommendSongMenu: [],
     recommendSongs: [],
+    rankings: { newRanking: {}, originRanking: {}, upRanking: {} },
   },
 
   /**
@@ -30,10 +31,13 @@ Page({
 
     // 从 store 中获取共享数据
     rankingStore.onState('hotRanking', (res) => {
-      if (res.length <= 0) return
-      const recommendSongs = res.slice(0, 15)
+      if ((res?.tracks || []).length <= 0) return
+      const recommendSongs = res.tracks.slice(0, 15)
       this.setData({ recommendSongs })
     })
+    rankingStore.onState('newRanking', this.getRankingHandler('newRanking'))
+    rankingStore.onState('originRanking', this.getRankingHandler('originRanking'))
+    rankingStore.onState('upRanking', this.getRankingHandler('upRanking'))
   },
 
   getPageData() {
@@ -61,5 +65,32 @@ Page({
     throttleQueryRect('.swiper-image').then((res) => {
       this.setData({ swiperHeight: res[0].height })
     })
+  },
+
+  handleMoreClick() {
+    this.toDetailSongsPage('hotRanking')
+  },
+  handleRankingItemClick(event) {
+    const ranking = event.currentTarget.dataset.key
+    this.toDetailSongsPage(ranking)
+  },
+  toDetailSongsPage(ranking) {
+    wx.navigateTo({
+      url: `/pages/detail-songs/index?ranking=${ranking}&type=rank`,
+    })
+  },
+
+  onUnload: function () {
+    // 取消监听
+    // rankingStore.offState('newRanking', this.getNewRankingHandler)
+  },
+
+  getRankingHandler: function (key) {
+    return (res) => {
+      if (Object.keys(res).length <= 0) return
+      const { name, coverImgUrl, playCount, tracks } = res
+      const newRankings = { ...this.data.rankings, [key]: { name, coverImgUrl, playCount, songList: tracks.slice(0, 3) } }
+      this.setData({ rankings: newRankings })
+    }
   },
 })

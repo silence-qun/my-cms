@@ -3,11 +3,6 @@ page {
   padding: 0 20rpx;
 }
 
-.van-search {
-  --search-background-color: #fff;
-  --search-padding: 10px 0;
-}
-
 .swiper {
   border-radius: 10rpx;
   overflow: hidden;
@@ -26,4 +21,10 @@ page {
   flex-direction: column;
   gap: 16rpx;
   padding-bottom: 16rpx;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
 }

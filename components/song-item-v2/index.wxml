@@ -1,0 +1,11 @@
+<!--components/song-item-v2/index.wxml-->
+<view class="item" bind:tap="handleSongItemClick">
+  <view class="index">{{index}}</view>
+  <view class="info">
+    <view class="name">{{item.name}}</view>
+    <view class="source">
+      <image src="/assets/images/icon/sq.png" class="icon" />
+      <text>{{item.ar[0].name || item.artists[0].name}} <text wx:if="{{item.alia[0] || item.alias[0]}}">· {{item.alia[0] || item.alias[0]}}</text></text>
+    </view>
+  </view>
+</view>

@@ -9,8 +9,8 @@
   </block>
 </swiper>
 
-<!-- <view wx:if="{{recommendSongs.length>0}}" class="recommend-song">
-  <area-header title="推荐歌曲"></area-header>
+<view wx:if="{{recommendSongs.length>0}}" class="recommend-song">
+  <area-header title="推荐歌曲" bind:click='handleMoreClick'></area-header>
   <view class="song-list">
     <block wx:for="{{recommendSongs}}" wx:key="id">
       <song-item item="{{item}}"></song-item>
@@ -19,8 +19,13 @@
 </view>
 
 <song-menu-area wx:if="{{hotSongMenu.length>0}}" title='热门歌单' songMenu='{{hotSongMenu}}'></song-menu-area>
-<song-menu-area wx:if="{{recommendSongMenu.length>0}}" title='推荐歌单' songMenu='{{recommendSongMenu}}'></song-menu-area> -->
+<song-menu-area wx:if="{{recommendSongMenu.length>0}}" title='推荐歌单' songMenu='{{recommendSongMenu}}'></song-menu-area>
 
 <view class="ranking">
   <area-header title='巅峰榜' showRight="{{false}}"></area-header>
+  <view class="ranking-list">
+    <block wx:for="{{rankings}}" wx:key="name">
+      <ranking-area-item item="{{item}}" class="ranking-item" data-key='{{index}}' bind:tap="handleRankingItemClick"></ranking-area-item>
+    </block>
+  </view>
 </view>

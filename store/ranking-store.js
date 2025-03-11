@@ -1,16 +1,30 @@
 import { HYEventStore } from 'hy-event-store'
 import { getTopList, getRankings } from '../service/api_music'
 
+const topListCfg = [
+  { name: '飙升榜', key: 'upRanking' },
+  { name: '新歌榜', key: 'newRanking' },
+  { name: '原创榜', key: 'originRanking' },
+  { name: '热歌榜', key: 'hotRanking' },
+]
+
 const rankingStore = new HYEventStore({
-  state: { hotRanking: [] },
+  state: { upRanking: {}, newRanking: {}, originRanking: {}, hotRanking: {} },
   actions: {
     getRankingDataAction(ctx) {
       getTopList()
         .then((res) => {
-          return getRankings(res.list[0].id)
+          const promises = []
+          topListCfg.forEach((top) => {
+            const id = res.list.find((item) => item.name === top.name)?.id
+            id && promises.push(getRankings(id))
+          })
+          return Promise.all(promises)
         })
         .then((res) => {
-          ctx.hotRanking = res?.playlist?.tracks || []
+          topListCfg.forEach((item, idx) => {
+            ctx[item.key] = res[idx]?.playlist || {}
+          })
         })
     },
   },
