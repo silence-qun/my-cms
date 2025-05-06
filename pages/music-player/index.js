@@ -1,6 +1,7 @@
 // pages/music-player/index.js
-import { getSongDetail } from '../../service/api_player'
+import { getSongDetail, getSongLyric } from '../../service/api_player'
 import { audioContext } from '../../store/index'
+import { parseLyric } from '../../utils/parse-lyric'
 
 Page({
   /**
@@ -16,6 +17,9 @@ Page({
     isMusicLyric: true,
     sliderValue: 0,
     isSliderChanging: false,
+    lyricInfos: [],
+    currentLyricIndex: 0,
+    currentLyricText: '',
   },
 
   /**
@@ -36,21 +40,64 @@ Page({
     audioContext.volume = 0.3
     // autoplay 和 play() 不能同时设置，会导致音频无法通过 pause/stop 等方法暂停/停止
     // audioContext.autoplay = true
-    audioContext.onCanplay(() => {
-      audioContext.play()
-    })
-    audioContext.onTimeUpdate(() => {
-      if (!this.data.isSliderChanging) {
-        const currentTime = audioContext.currentTime * 1000
-        const sliderValue = (currentTime / this.data.durationTime) * 100
-        this.setData({ currentTime, sliderValue })
-      }
-    })
+    this.setupAudioContextListener()
   },
 
   getPageData: function (id) {
     getSongDetail(id).then((res) => {
       this.setData({ currentSong: res.songs[0], durationTime: res.songs[0].dt })
+    })
+
+    getSongLyric(id).then(({ lrc: { lyric } }) => {
+      const lyricInfos = parseLyric(lyric)
+      this.setData({ lyricInfos })
+    })
+  },
+
+  setupAudioContextListener: function () {
+    // autoplay 和 play() 不能同时设置，会导致音频无法通过 pause/stop 等方法暂停/停止
+    // audioContext.autoplay = true
+    audioContext.onCanplay(() => {
+      audioContext.play()
+    })
+
+    // 监听时间变化
+    audioContext.onTimeUpdate(() => {
+      // 1. 获取当前时间
+      const currentTime = audioContext.currentTime * 1000
+
+      // 2. 根据当前时间修改 currentTime/sliderValue
+      if (!this.data.isSliderChanging) {
+        const sliderValue = (currentTime / this.data.durationTime) * 100
+        this.setData({ currentTime, sliderValue })
+      }
+
+      // 3. 根据当前时间去查找播放的歌词
+      // 写法一
+      // for (let i = 0; i < this.data.lyricInfos.length; i++) {
+      //   const lyricInfo = this.data.lyricInfos[i]
+      //   if (currentTime < lyricInfo.time) {
+      //     const currentIndex = i - 1
+      //     if (this.data.currentLyricIndex !== currentIndex) {
+      //       const currentLyricInfo = this.data.lyricInfos[currentIndex]
+      //       this.setData({ currentLyricText: currentLyricInfo.text, currentLyricIndex: currentIndex })
+      //     }
+      //     break
+      //   }
+      // }
+
+      // 写法二
+      let i = 0
+      for (; i < this.data.lyricInfos.length; i++) {
+        const lyricInfo = this.data.lyricInfos[i]
+        if (currentTime < lyricInfo.time) break
+      }
+
+      const currentIndex = i - 1
+      if (this.data.currentLyricIndex !== currentIndex) {
+        const currentLyricInfo = this.data.lyricInfos[currentIndex]
+        this.setData({ currentLyricText: currentLyricInfo.text, currentLyricIndex: currentIndex })
+      }
     })
   },
 
@@ -72,7 +119,7 @@ Page({
   handleSliderChanging: function (event) {
     const value = event.detail.value
     const currentTime = (this.data.durationTime * value) / 100
-    this.setData({ isSliderChanging: true, currentTime })
+    this.setData({ isSliderChanging: true, currentTime, sliderValue: value })
   },
 
   /**

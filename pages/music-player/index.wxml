@@ -25,7 +25,9 @@
         <view wx:if="{{currentSong.alia[0]}}" class="alias">专辑：{{currentSong.alia[0]}}</view>
       </view>
     </view>
-    <view wx:if="{{isMusicLyric}}" class="lyric">歌词</view>
+    <view wx:if="{{isMusicLyric}}" class="lyric">
+      <view class="lyric-text">{{currentLyricText}}</view>
+    </view>
     <view class="progress">
       <slider value="{{sliderValue}}" block-size="{{12}}" class="slider" bindchange="handleSliderChange" bindchanging="handleSliderChanging" />
       <view class="time">

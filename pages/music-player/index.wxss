@@ -68,10 +68,17 @@ page {
 }
 
 .music .lyric {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: 1;
+}
+.lyric-text {
+  font-size: 28rpx;
+  background: linear-gradient(45deg, #fb00ff, #00ffd5, #bbff00);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .progress {
