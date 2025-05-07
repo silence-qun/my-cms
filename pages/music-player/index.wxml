@@ -3,7 +3,7 @@
 <image src="{{currentSong.al.picUrl}}" mode="aspectFill" class="bg-image" />
 <view class="bg-cover"></view>
 
-<nav-bar>
+<nav-bar bind:click='handleBackBtnClick'>
   <view slot='title' class="tab">
     <view class="{{currentPage === 0 ? 'active': ''}}">歌曲</view>
     <view class="divider">|</view>
@@ -36,14 +36,18 @@
       </view>
     </view>
     <view class="operation">
-      <image src="/assets/images/icon/cycle.png" mode="" class="btn btn-mode" />
-      <image src="/assets/images/icon/prev.png" mode="" class="btn btn-prev" />
-      <image src="/assets/images/icon/pause.png" mode="" class="btn btn-pause" />
-      <image src="/assets/images/icon/next.png" mode="" class="btn btn-next" />
-      <image src="/assets/images/icon/music-list.png" mode="" class="btn btn-music" />
+      <image src="/assets/images/icon/{{playModeName}}.png"class="btn btn-mode" bind:tap="handleModeBtnClick" />
+      <image src="/assets/images/icon/prev.png"class="btn btn-prev" />
+      <image src="/assets/images/icon/{{playingName}}.png"class="btn btn-pause" bind:tap="handlePlayBtnClick"/>
+      <image src="/assets/images/icon/next.png"class="btn btn-next" />
+      <image src="/assets/images/icon/music-list.png"class="btn btn-music" />
     </view>
   </swiper-item>
-  <swiper-item>
-    2
+  <swiper-item class="lyric">
+    <scroll-view class="lyric-list" scroll-y scroll-top="{{lyricScrollTop}}" 	scroll-with-animation>
+      <block wx:for="{{lyricInfos}}" wx:key="index">
+        <view class="item {{currentLyricIndex === index ? 'active' : ''}}" style="padding-top: {{index === 0 ? (contentHeight / 2 - 80) : 0}}px;padding-bottom: {{index === lyricInfos.length - 1 ? (contentHeight / 2 + 80) : 0}}px;">{{item.text}}</view>
+      </block>
+    </scroll-view>
   </swiper-item>
 </swiper>
