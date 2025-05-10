@@ -1,5 +1,5 @@
 // pages/home-music/index.js
-import { rankingStore } from '../../store/index'
+import { rankingStore, playerStore } from '../../store/index'
 import { getBanners, getSongMenu } from '../../service/api_music'
 import queryRect from '../../utils/query-rect'
 import throttle from '../../utils/throttle'
@@ -17,6 +17,9 @@ Page({
     recommendSongMenu: [],
     recommendSongs: [],
     rankings: { newRanking: {}, originRanking: {}, upRanking: {} },
+    currentSong: {},
+    isPlaying: false,
+    playAnimState: 'paused'
   },
 
   /**
@@ -30,14 +33,7 @@ Page({
     rankingStore.dispatch('getRankingDataAction')
 
     // 从 store 中获取共享数据
-    rankingStore.onState('hotRanking', (res) => {
-      if ((res?.tracks || []).length <= 0) return
-      const recommendSongs = res.tracks.slice(0, 15)
-      this.setData({ recommendSongs })
-    })
-    rankingStore.onState('newRanking', this.getRankingHandler('newRanking'))
-    rankingStore.onState('originRanking', this.getRankingHandler('originRanking'))
-    rankingStore.onState('upRanking', this.getRankingHandler('upRanking'))
+    this.setupPlayerStoreListener()
   },
 
   getPageData() {
@@ -57,7 +53,7 @@ Page({
   },
 
   handleSearchClick() {
-    wx.navigateTo({ url: '/pages/detail-search/index' })
+    wx.navigateTo({ url: '/packageDetail/pages/detail-search/index' })
   },
 
   // 监听 image load 事件，根据 image 的高度去设置 swiper 的高度
@@ -76,7 +72,42 @@ Page({
   },
   toDetailSongsPage(ranking) {
     wx.navigateTo({
-      url: `/pages/detail-songs/index?ranking=${ranking}&type=rank`,
+      url: `/packageDetail/pages/detail-songs/index?ranking=${ranking}&type=rank`,
+    })
+  },
+  handleSongItemClick: function (event) {
+    const index = event.currentTarget.dataset.index
+    playerStore.setState('playListSongs', this.data.recommendSongs)
+    playerStore.setState('playListIndex', index)
+  },
+
+  handlePlayBtnClick: function (event) {
+    playerStore.dispatch('changeMusicPlayStatusAction', !this.data.isPlaying)
+    // 小程序不支持这方法，需要使用 catch:tap
+    // event.stopPropagation()
+  },
+
+  handlePlayBarClick: function () {
+    wx.navigateTo({
+      url: `/pages/music-player/index?id=${this.data.currentSong.id}`,
+    })
+  },
+
+  setupPlayerStoreListener: function () {
+    // 1. 排行榜监听
+    rankingStore.onState('hotRanking', (res) => {
+      if ((res?.tracks || []).length <= 0) return
+      const recommendSongs = res.tracks.slice(0, 15)
+      this.setData({ recommendSongs })
+    })
+    rankingStore.onState('newRanking', this.getRankingHandler('newRanking'))
+    rankingStore.onState('originRanking', this.getRankingHandler('originRanking'))
+    rankingStore.onState('upRanking', this.getRankingHandler('upRanking'))
+
+    // 2. 播放器监听
+    playerStore.onStates(['currentSong', 'isPlaying'], ({ currentSong, isPlaying }) => {
+      if (currentSong) this.setData({ currentSong })
+      if (isPlaying !== undefined) this.setData({ isPlaying, playAnimState: isPlaying ? 'running' : 'paused' })
     })
   },
 

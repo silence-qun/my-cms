@@ -1,6 +1,6 @@
 // pages/music-player/index.js
 // import { getSongDetail, getSongLyric } from '../../service/api_player'
-import { audioContext, playerStore } from '../../store/index'
+import { audioContext, playerStore } from '../../../store/index'
 // import { parseLyric } from '../../utils/parse-lyric'
 
 const playModeNames = ['cycle', 'cycle-singe', 'random']
@@ -120,7 +120,7 @@ Page({
     const value = event.detail.value
     const currentTime = (this.data.durationTime * value) / 100
 
-    audioContext.pause()
+    // audioContext.pause()
     // InnerAudioContext.seek(number position) 跳转的时间，单位 s
     audioContext.seek(currentTime / 1000)
     this.setData({ sliderValue: value, isSliderChanging: false })
@@ -144,15 +144,26 @@ Page({
   },
 
   handlePlayBtnClick: function () {
-    playerStore.dispatch('changeMusicPlayStatusAction')
+    playerStore.dispatch('changeMusicPlayStatusAction', !this.data.isPlaying)
+  },
+
+  handlePrevBtnClick: function () {
+    playerStore.dispatch('changeNewMusicAction', false)
+  },
+
+  handleNextBtnClick: function () {
+    playerStore.dispatch('changeNewMusicAction')
+  },
+
+  // 数据监听
+  handleCurrentMusicListener({ currentSong, durationTime, lyricInfos }) {
+    if (currentSong) this.setData({ currentSong })
+    if (durationTime) this.setData({ durationTime })
+    if (lyricInfos) this.setData({ lyricInfos })
   },
 
   setupPlayerStoreListener: function () {
-    playerStore.onStates(['currentSong', 'durationTime', 'lyricInfos'], ({ currentSong, durationTime, lyricInfos }) => {
-      if (currentSong) this.setData({ currentSong })
-      if (durationTime) this.setData({ durationTime })
-      if (lyricInfos) this.setData({ lyricInfos })
-    })
+    playerStore.onStates(['currentSong', 'durationTime', 'lyricInfos'], this.handleCurrentMusicListener)
 
     playerStore.onStates(['currentTime', 'currentLyricIndex', 'currentLyricText'], ({ currentTime, currentLyricIndex, currentLyricText }) => {
       if (currentTime && !this.data.isSliderChanging) {
@@ -176,5 +187,7 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload() { },
+  onUnload() {
+    playerStore.offStates(['currentSong', 'durationTime', 'lyricInfos'], this.handleCurrentMusicListener)
+  },
 })

@@ -28,3 +28,59 @@ page {
   flex-direction: column;
   gap: 20rpx;
 }
+
+/* 播放工具栏 */
+.play-bar-placeholder {
+  height: 44px;
+}
+
+.play-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 44px;
+  bottom: 0;
+  padding: 0 8px;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, .1);
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.play-bar .left,.play-bar .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.play-bar .left .album {
+  position: relative;
+  top: -8px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+
+.play-bar .left .name {
+  font-size: 14px;
+  color: #fff;
+}
+
+.play-bar .right .icon{
+  width: 30px;
+  height: 30px;
+}
+
+/* album 动画 */
+@keyframes albumRotate{
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.album-anim{
+  animation: albumRotate 10s linear infinite;
+}

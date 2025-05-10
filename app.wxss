@@ -8,3 +8,5 @@ page {
   --search-background-color: #fff;
   --search-padding: 10px 0;
 }
+
+/* tabbar 颜色值：normal(#515151), active(#07C160) */

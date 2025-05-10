@@ -6,25 +6,6 @@
     "skylineRenderEnable": true,
     "urlCheck": false
   },
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "pages/music-player/index",
-          "pathName": "pages/music-player/index",
-          "query": "id=453268268",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "pages/music-player/index",
-          "pathName": "pages/music-player/index",
-          "query": "id=2645500113",
-          "launchMode": "default",
-          "scene": null
-        }
-      ]
-    }
-  },
+  "condition": {},
   "libVersion": "3.7.7"
 }

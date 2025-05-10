@@ -1,5 +1,5 @@
 <!--pages/music-player/index.wxml-->
-<wxs src='../../utils/format.wxs' module="format"></wxs>
+<wxs src='../../../utils/format.wxs' module="format"></wxs>
 <image src="{{currentSong.al.picUrl}}" mode="aspectFill" class="bg-image" />
 <view class="bg-cover"></view>
 
@@ -36,11 +36,11 @@
       </view>
     </view>
     <view class="operation">
-      <image src="/assets/images/icon/{{playModeName}}.png"class="btn btn-mode" bind:tap="handleModeBtnClick" />
-      <image src="/assets/images/icon/prev.png"class="btn btn-prev" />
-      <image src="/assets/images/icon/{{playingName}}.png"class="btn btn-pause" bind:tap="handlePlayBtnClick"/>
-      <image src="/assets/images/icon/next.png"class="btn btn-next" />
-      <image src="/assets/images/icon/music-list.png"class="btn btn-music" />
+      <image src="/packagePlayer/assets/images/icon/{{playModeName}}.png"class="btn btn-mode" bind:tap="handleModeBtnClick" />
+      <image src="/packagePlayer/assets/images/icon/prev.png"class="btn btn-prev" bind:tap="handlePrevBtnClick"/>
+      <image src="/packagePlayer/assets/images/icon/{{playingName}}.png"class="btn btn-pause" bind:tap="handlePlayBtnClick"/>
+      <image src="/packagePlayer/assets/images/icon/next.png"class="btn btn-next"  bind:tap="handleNextBtnClick"/>
+      <image src="/packagePlayer/assets/images/icon/music-list.png"class="btn btn-music" />
     </view>
   </swiper-item>
   <swiper-item class="lyric">

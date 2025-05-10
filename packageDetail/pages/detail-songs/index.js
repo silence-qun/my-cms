@@ -1,6 +1,6 @@
 // pages/detail-songs/index.js
-import { rankingStore } from '../../store/index'
-import { getRankings } from '../../service/api_music'
+import { rankingStore, playerStore } from '../../../store/index'
+import { getRankings } from '../../../service/api_music'
 
 Page({
   /**
@@ -28,6 +28,12 @@ Page({
       this.setData({ ranking })
       rankingStore.onState(ranking, this.getRankingDataHandler)
     }
+  },
+
+  handleSongItemClick: function (event) {
+    const index = event.currentTarget.dataset.index
+    playerStore.setState('playListSongs', this.data.songInfo.tracks)
+    playerStore.setState('playListIndex', index)
   },
 
   /**
